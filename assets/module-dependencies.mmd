@@ -1,0 +1,66 @@
+---
+config:
+  theme: base
+  htmlLabels: true
+  themeCSS: '.node .label foreignObject { overflow: visible; }'
+  themeVariables:
+    fontFamily: 'Microsoft YaHei, Segoe UI, sans-serif'
+    fontSize: '16px'
+    lineColor: '#627386'
+    primaryTextColor: '#142638'
+    clusterBkg: '#F4F7FA'
+    clusterBorder: '#BCCAD6'
+  flowchart:
+    curve: basis
+    padding: 16
+    nodeSpacing: 27
+    rankSpacing: 55
+---
+flowchart LR
+    subgraph L3["L3  应用接入"]
+        coding["coding-agent"]
+        env["env"]
+    end
+    subgraph L2["L2  会话运行"]
+        agent["agent"]
+        durable["durable"]
+    end
+    subgraph L1["L1  模型与对象"]
+        ai["ai"]
+        chord["chord"]
+    end
+    subgraph L0["L0  基础包"]
+        tui["tui"]
+        mcp["mcp"]
+        codemode["codemode"]
+        schema["schema"]
+        telemetry["telemetry"]
+    end
+
+    coding --> agent
+    coding --> ai
+    coding --> codemode
+    coding --> mcp
+    coding --> tui
+    env --> chord
+    env --> durable
+    agent --> ai
+    agent --> schema
+    durable --> chord
+    durable --> ai
+    durable --> codemode
+    durable --> schema
+    durable --> telemetry
+    ai --> schema
+    ai --> telemetry
+    chord --> schema
+    chord --> telemetry
+
+    classDef surface fill:#DDEEF9,stroke:#3A729B,color:#142638
+    classDef runtime fill:#E2F2ED,stroke:#458578,color:#142638
+    classDef platform fill:#EBE8FA,stroke:#7467A2,color:#142638
+    classDef base fill:#FFFFFF,stroke:#8195A7,color:#142638
+    class coding,env surface
+    class agent,durable runtime
+    class ai,chord platform
+    class tui,mcp,codemode,schema,telemetry base
